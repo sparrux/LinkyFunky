@@ -3,6 +3,24 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Rider / IntelliJ-based IDE
+.idea/
+*.sln.iml
+
+# Rider-specific caches
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Rider + ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Rider system files
+.idea_modules/
+
 # User-specific files
 *.rsuser
 *.suo
