@@ -7,7 +7,7 @@ namespace LinkyFunky.Domain.Entities;
 /// </summary>
 public sealed class User : Entity
 {
-    private User() { }
+    User() { }
 
     /// <summary>
     /// Gets the shortcuts created by the user.

@@ -9,7 +9,7 @@ namespace LinkyFunky.Domain.Entities;
 /// </summary>
 public sealed class Shortcut : Entity
 {
-    private Shortcut() { }
+    Shortcut() { }
     
     /// <summary>
     /// Gets the original URL provided by a user for shortening.
