@@ -1,6 +1,8 @@
 using LinkyFunky.Infrastructure.Persistence;
 using LinkyFunky.Infrastructure.Services;
 using LinkyFunky.Domain.Contracts;
+using LinkyFunky.Domain.Repositories;
+using LinkyFunky.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,9 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddSingleton<IShortCodeGen>(_ => new Base62ShortCodeGen(DefaultShortCodeLength));
+
+        services.AddScoped<IUsersRepository, UsersRepository>();
+        services.AddScoped<IShortcutsRepository, ShortcutsRepository>();
         
         var connectionString = configuration.GetConnectionString("LinkyDb");
 
