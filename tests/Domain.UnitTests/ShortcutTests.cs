@@ -2,7 +2,7 @@ using FluentResults;
 using LinkyFunky.Domain.Contracts;
 using LinkyFunky.Domain.Entities;
 
-namespace Infrastructure.UnitTests;
+namespace Domain.UnitTests;
 
 public class ShortcutTests
 {
