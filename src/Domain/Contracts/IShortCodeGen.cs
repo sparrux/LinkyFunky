@@ -1,3 +1,5 @@
+using FluentResults;
+
 namespace LinkyFunky.Domain.Contracts;
 
 /// <summary>
@@ -9,6 +11,6 @@ public interface IShortCodeGen
     /// Generates a short code for the specified long URL.
     /// </summary>
     /// <param name="longUrl">The original URL that must be converted into a short code.</param>
-    /// <returns>A generated short code in a URL-safe format.</returns>
-    string Generate(string longUrl);
+    /// <returns>A result containing the generated short code in a URL-safe format.</returns>
+    Result<string> Generate(string longUrl);
 }

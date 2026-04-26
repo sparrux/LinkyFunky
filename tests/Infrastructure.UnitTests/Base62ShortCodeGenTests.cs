@@ -15,7 +15,9 @@ public class Base62ShortCodeGenTests
         var firstCode = sut.Generate(longUrl);
         var secondCode = sut.Generate(longUrl);
 
-        Assert.Equal(firstCode, secondCode);
+        Assert.True(firstCode.IsSuccess);
+        Assert.True(secondCode.IsSuccess);
+        Assert.Equal(firstCode.Value, secondCode.Value);
     }
 
     [Fact]
@@ -25,7 +27,8 @@ public class Base62ShortCodeGenTests
 
         var code = sut.Generate("https://example.com");
 
-        Assert.Equal(DefaultCodeLength, code.Length);
+        Assert.True(code.IsSuccess);
+        Assert.Equal(DefaultCodeLength, code.Value.Length);
     }
 
     [Fact]
@@ -35,7 +38,8 @@ public class Base62ShortCodeGenTests
 
         var code = sut.Generate("https://example.com/base62");
 
-        Assert.Matches($"^[0-9A-Za-z]{{{DefaultCodeLength}}}$", code);
+        Assert.True(code.IsSuccess);
+        Assert.Matches($"^[0-9A-Za-z]{{{DefaultCodeLength}}}$", code.Value);
     }
 
     [Fact]
@@ -48,30 +52,34 @@ public class Base62ShortCodeGenTests
         var cleanCode = sut.Generate(cleanUrl);
         var paddedCode = sut.Generate(paddedUrl);
 
-        Assert.Equal(cleanCode, paddedCode);
+        Assert.True(cleanCode.IsSuccess);
+        Assert.True(paddedCode.IsSuccess);
+        Assert.Equal(cleanCode.Value, paddedCode.Value);
     }
 
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("   ")]
-    public void Generate_ShouldThrowArgumentException_WhenUrlIsEmptyOrWhitespace(string longUrl)
+    public void Generate_ShouldReturnFailure_WhenUrlIsEmptyOrWhitespace(string longUrl)
     {
         var sut = CreateSut();
 
-        var exception = Assert.Throws<ArgumentException>(() => sut.Generate(longUrl));
+        var result = sut.Generate(longUrl);
 
-        Assert.Equal("longUrl", exception.ParamName);
+        Assert.True(result.IsFailed);
+        Assert.Contains(result.Errors, error => error.Message == "Long URL must not be null or empty.");
     }
 
     [Fact]
-    public void Generate_ShouldThrowArgumentException_WhenUrlIsNull()
+    public void Generate_ShouldReturnFailure_WhenUrlIsNull()
     {
         var sut = CreateSut();
 
-        var exception = Assert.Throws<ArgumentException>(() => sut.Generate(null!));
+        var result = sut.Generate(null!);
 
-        Assert.Equal("longUrl", exception.ParamName);
+        Assert.True(result.IsFailed);
+        Assert.Contains(result.Errors, error => error.Message == "Long URL must not be null or empty.");
     }
 
     [Fact]
@@ -82,7 +90,8 @@ public class Base62ShortCodeGenTests
 
         var code = sut.Generate("https://example.com/custom-length");
 
-        Assert.Equal(codeLength, code.Length);
+        Assert.True(code.IsSuccess);
+        Assert.Equal(codeLength, code.Value.Length);
     }
 
     [Theory]

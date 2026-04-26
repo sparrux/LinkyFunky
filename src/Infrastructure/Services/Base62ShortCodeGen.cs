@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using FluentResults;
 using LinkyFunky.Domain.Contracts;
 
 namespace LinkyFunky.Infrastructure.Services;
@@ -31,19 +32,18 @@ public sealed class Base62ShortCodeGen : IShortCodeGen
     /// Generates a Base62 short code from the specified URL.
     /// </summary>
     /// <param name="longUrl">The original URL to encode.</param>
-    /// <returns>A deterministic Base62 short code with a fixed length.</returns>
-    /// <exception cref="ArgumentException">Thrown when the URL is null, empty, or whitespace.</exception>
-    public string Generate(string longUrl)
+    /// <returns>A result containing a deterministic Base62 short code with a fixed length.</returns>
+    public Result<string> Generate(string longUrl)
     {
         if (string.IsNullOrWhiteSpace(longUrl))
         {
-            throw new ArgumentException("Long URL must not be null or empty.", nameof(longUrl));
+            return Result.Fail("Long URL must not be null or empty.");
         }
 
         var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(longUrl.Trim()));
         var value = BitConverter.ToUInt64(hashBytes, 0);
 
-        return EncodeBase62(value, _codeLength);
+        return Result.Ok(EncodeBase62(value, _codeLength));
     }
 
     /// <summary>
