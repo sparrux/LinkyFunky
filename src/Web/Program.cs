@@ -1,10 +1,10 @@
 using LinkyFunky.Application;
 using LinkyFunky.Infrastructure;
 using LinkyFunky.ServiceDefaults;
-using LinkyFunky.Web;
-using LinkyFunky.Web.Authentication;
 using Scalar.AspNetCore;
 using FastEndpoints;
+using Web;
+using Web.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 

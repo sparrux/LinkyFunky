@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LinkyFunky.Web.Authentication;
+namespace Web.Authentication;
 
 /// <summary>
 /// Automatically signs in an anonymous user for endpoints that require authorization.

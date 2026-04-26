@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace LinkyFunky.Web;
+namespace Web;
 
 /// <summary>
 /// Registers Web-layer dependencies.

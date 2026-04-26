@@ -1,6 +1,6 @@
 using FastEndpoints;
 
-namespace LinkyFunky.Web.Endpoints.HealthCheck;
+namespace Web.Endpoints.HealthCheck;
 
 /// <summary>
 /// Handles health check requests and returns service availability state.
