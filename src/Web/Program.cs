@@ -18,12 +18,14 @@ builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
 
+
 app.MapDefaultEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+    await app.ApplyMigrationsInDevelopmentAsync();
 }
 
 app.UseHttpsRedirection();

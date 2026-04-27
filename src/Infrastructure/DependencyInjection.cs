@@ -22,11 +22,12 @@ public static class DependencyInjection
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IShortcutsRepository, ShortcutsRepository>();
         
-        var connectionString = configuration.GetConnectionString("LinkyDb");
+        var connectionString = configuration.GetConnectionString("linkyfunky");
 
         services.AddDbContext<LinkyDbContext>(options =>
         {
-            options.UseNpgsql(connectionString);
+            options.UseNpgsql(connectionString, opt => 
+                opt.MigrationsAssembly(typeof(DependencyInjection).Assembly));
         });
 
         return services;

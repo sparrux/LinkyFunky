@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using LinkyFunky.Domain.Entities;
+using LinkyFunky.Domain.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -17,8 +19,10 @@ public sealed class AnonymouslyAuthMiddleware(RequestDelegate next)
             await next(httpContext);
             return;
         }
+        
+        var usersRepository = httpContext.RequestServices.GetRequiredService<IUsersRepository>();
 
-        await SignInAnonymouslyAsync(httpContext);
+        await SignInAnonymouslyAsync(httpContext, usersRepository);
         await next(httpContext);
     }
 
@@ -39,19 +43,30 @@ public sealed class AnonymouslyAuthMiddleware(RequestDelegate next)
         return endpoint.Metadata.GetMetadata<IAuthorizeData>() is not null;
     }
 
-    static Task SignInAnonymouslyAsync(HttpContext httpContext)
+    static async Task SignInAnonymouslyAsync(HttpContext httpContext, IUsersRepository usersRepository)
     {
-        var testUserId = Guid.NewGuid().ToString();
+        var user = await CreateAnonymousUserAsync(usersRepository);
+        
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, testUserId),
-            new Claim(ClaimTypes.Name, "Anonymous")
+            new Claim(ClaimTypes.Name, "Anonymous"),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
 
         httpContext.User = principal;
-        return httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+    }
+
+    static async Task<User> CreateAnonymousUserAsync(IUsersRepository usersRepository)
+    {
+        var user = User.Create();
+
+        await usersRepository.AddAsync(user);
+        await usersRepository.UnitOfWork.SaveChangesAsync();
+
+        return user;
     }
 }

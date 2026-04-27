@@ -2,8 +2,8 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var linkyDb = builder
     .AddPostgres("linky-db")
-    .WithDataVolume()
-    .AddDatabase("LinkyDb");
+    .WithDataVolume("linky-db_volume")
+    .AddDatabase("linkyfunky");
 
 builder
     .AddProject<Projects.Web>("web")
