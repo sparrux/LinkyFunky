@@ -1,6 +1,10 @@
+using LinkyFunky.Application.Contracts.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using LinkyFunky.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Web.Options;
+using Web.Services;
 
 namespace Web;
 
@@ -9,8 +13,16 @@ namespace Web;
 /// </summary>
 public static class DependencyInjection
 {
-    public static IServiceCollection AddWebServices(this IServiceCollection services)
+    public static IServiceCollection AddWebServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<DomainOptions>(configuration.GetSection(DomainOptions.SectionName));
+
+        services.AddSingleton<IShortUrlBuilder>(s =>
+        {
+            var domainOptions = s.GetRequiredService<IOptions<DomainOptions>>();
+            return new ShortUrlBuilder(domainOptions);
+        });
+        
         services
             .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
