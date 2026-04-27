@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTests", "tests\Domain.UnitTests\Domain.UnitTests.csproj", "{E98419DB-BCBF-4D44-8089-7C1AB80B3F44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.UnitTests", "tests\Web.UnitTests\Web.UnitTests.csproj", "{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +133,18 @@ Global
 		{E98419DB-BCBF-4D44-8089-7C1AB80B3F44}.Release|x64.Build.0 = Release|Any CPU
 		{E98419DB-BCBF-4D44-8089-7C1AB80B3F44}.Release|x86.ActiveCfg = Release|Any CPU
 		{E98419DB-BCBF-4D44-8089-7C1AB80B3F44}.Release|x86.Build.0 = Release|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Debug|x64.Build.0 = Debug|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Debug|x86.Build.0 = Debug|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Release|x64.Build.0 = Release|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,5 +152,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2673D771-0029-46D3-9702-5DAF6F52BC48} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{E98419DB-BCBF-4D44-8089-7C1AB80B3F44} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{728A4629-34AC-4653-AEB4-4EB7EDACC3A7} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
