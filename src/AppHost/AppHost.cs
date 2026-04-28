@@ -5,10 +5,16 @@ var linkyDb = builder
     .WithDataVolume("linky-db_volume")
     .AddDatabase("linkyfunky");
 
+var redis = builder
+    .AddRedis("redis")
+    .WithDataVolume("redis_volume");
+
 builder
     .AddProject<Projects.Web>("web")
     .WithReference(linkyDb)
+    .WithReference(redis)
     .WithExternalHttpEndpoints()
-    .WaitFor(linkyDb);
+    .WaitFor(linkyDb)
+    .WaitFor(redis);
 
 builder.Build().Run();

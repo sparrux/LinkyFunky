@@ -12,6 +12,7 @@ namespace LinkyFunky.Infrastructure;
 public static class DependencyInjection
 {
     const int DefaultShortCodeLength = 8;
+    const string RedisInstanceNameKey = "Redis:InstanceName";
 
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
@@ -30,6 +31,24 @@ public static class DependencyInjection
                 opt.MigrationsAssembly(typeof(DependencyInjection).Assembly));
         });
 
+        services.AddRedisDistributedCache(configuration);
+
         return services;
+    }
+
+    /// <summary>
+    /// Registers Redis-backed distributed cache services.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The application configuration.</param>
+    static void AddRedisDistributedCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        var redisConfiguration = configuration.GetConnectionString("redis");
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisConfiguration;
+            options.InstanceName = configuration[RedisInstanceNameKey];
+        });
     }
 }
