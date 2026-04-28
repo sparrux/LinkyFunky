@@ -1,9 +1,8 @@
 using FluentResults;
-using LinkyFunky.Application.Commands;
-using LinkyFunky.Domain.Repositories;
+using LinkyFunky.Application.Interfaces;
 using MediatR;
 
-namespace LinkyFunky.Application.Handlers;
+namespace LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 
 /// <summary>
 /// Handles long URL lookup by short code.

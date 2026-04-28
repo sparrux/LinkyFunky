@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
+using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Domain.Common;
-using LinkyFunky.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkyFunky.Infrastructure.Persistence.Repositories;

@@ -1,10 +1,9 @@
-using LinkyFunky.Application.Commands;
 using FluentResults;
+using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Domain.Entities;
-using LinkyFunky.Domain.Repositories;
 using MediatR;
 
-namespace LinkyFunky.Application.Handlers;
+namespace LinkyFunky.Application.Features.Users.CreateUser;
 
 /// <summary>
 /// Handles user creation requests.

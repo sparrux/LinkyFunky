@@ -1,7 +1,7 @@
 using FluentResults;
 using MediatR;
 
-namespace LinkyFunky.Application.Commands;
+namespace LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 
 /// <summary>
 /// Requests a long URL by the provided short code.

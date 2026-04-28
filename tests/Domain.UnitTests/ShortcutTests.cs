@@ -1,6 +1,6 @@
 using FluentResults;
-using LinkyFunky.Domain.Contracts;
 using LinkyFunky.Domain.Entities;
+using LinkyFunky.Domain.Interfaces;
 
 namespace Domain.UnitTests;
 

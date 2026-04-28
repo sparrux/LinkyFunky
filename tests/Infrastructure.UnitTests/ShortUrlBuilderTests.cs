@@ -1,8 +1,8 @@
+using LinkyFunky.Infrastructure.Options;
+using LinkyFunky.Infrastructure.Services;
 using Microsoft.Extensions.Options;
-using Web.Options;
-using Web.Services;
 
-namespace Web.UnitTests;
+namespace Infrastructure.UnitTests;
 
 public class ShortUrlBuilderTests
 {

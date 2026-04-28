@@ -1,4 +1,4 @@
-namespace Web.Options;
+namespace LinkyFunky.Infrastructure.Options;
 
 /// <summary>
 /// Represents domain settings used to build public short URLs.

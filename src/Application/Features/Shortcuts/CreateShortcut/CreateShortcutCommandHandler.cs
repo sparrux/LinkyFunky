@@ -1,13 +1,11 @@
 using FluentResults;
-using LinkyFunky.Application.Commands;
 using LinkyFunky.Application.Contracts.Responses;
-using LinkyFunky.Application.Contracts.Services;
-using LinkyFunky.Domain.Contracts;
+using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Domain.Entities;
-using LinkyFunky.Domain.Repositories;
+using LinkyFunky.Domain.Interfaces;
 using MediatR;
 
-namespace LinkyFunky.Application.Handlers;
+namespace LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 
 /// <summary>
 /// Handles shortcut creation requests.

@@ -1,5 +1,5 @@
 using FastEndpoints;
-using LinkyFunky.Application.Commands;
+using LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 

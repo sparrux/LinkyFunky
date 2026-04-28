@@ -1,6 +1,6 @@
 using FluentResults;
 
-namespace LinkyFunky.Domain.Contracts;
+namespace LinkyFunky.Domain.Interfaces;
 
 /// <summary>
 /// Defines a contract for generating short codes.

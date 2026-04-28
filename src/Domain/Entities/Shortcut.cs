@@ -1,6 +1,6 @@
 using LinkyFunky.Domain.Common;
-using LinkyFunky.Domain.Contracts;
 using FluentResults;
+using LinkyFunky.Domain.Interfaces;
 
 namespace LinkyFunky.Domain.Entities;
 

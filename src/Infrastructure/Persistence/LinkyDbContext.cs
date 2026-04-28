@@ -1,5 +1,5 @@
+using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Domain.Entities;
-using LinkyFunky.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 

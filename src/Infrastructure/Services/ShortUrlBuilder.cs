@@ -1,8 +1,8 @@
-using LinkyFunky.Application.Contracts.Services;
+using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Infrastructure.Options;
 using Microsoft.Extensions.Options;
-using Web.Options;
 
-namespace Web.Services;
+namespace LinkyFunky.Infrastructure.Services;
 
 /// <summary>
 /// Builds public short URLs using configured domain settings.

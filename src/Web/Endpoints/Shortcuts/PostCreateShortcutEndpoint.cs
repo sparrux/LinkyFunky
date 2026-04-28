@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using FastEndpoints;
-using LinkyFunky.Application.Commands;
 using LinkyFunky.Application.Contracts.Requests;
 using LinkyFunky.Application.Contracts.Responses;
+using LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 

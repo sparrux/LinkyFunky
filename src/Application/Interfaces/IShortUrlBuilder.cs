@@ -1,4 +1,4 @@
-namespace LinkyFunky.Application.Contracts.Services;
+namespace LinkyFunky.Application.Interfaces;
 
 public interface IShortUrlBuilder
 {

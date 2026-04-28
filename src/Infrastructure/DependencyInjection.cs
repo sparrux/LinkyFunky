@@ -1,7 +1,7 @@
+using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Domain.Interfaces;
 using LinkyFunky.Infrastructure.Persistence;
 using LinkyFunky.Infrastructure.Services;
-using LinkyFunky.Domain.Contracts;
-using LinkyFunky.Domain.Repositories;
 using LinkyFunky.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,22 +18,29 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IShortCodeGen>(_ => new RandomShortCodeGen(DefaultShortCodeLength));
+        services.AddServices();
+        services.AddDatabase(configuration);
+        services.AddRedisDistributedCache(configuration);
 
+        return services;
+    }
+    
+    static void AddServices(this IServiceCollection services)
+    {
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IShortcutsRepository, ShortcutsRepository>();
-        
+        services.AddSingleton<IShortCodeGen>(_ => new RandomShortCodeGen(DefaultShortCodeLength));
+    }
+    
+    static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    {
         var connectionString = configuration.GetConnectionString("linkyfunky");
-
+        
         services.AddDbContext<LinkyDbContext>(options =>
         {
             options.UseNpgsql(connectionString, opt => 
                 opt.MigrationsAssembly(typeof(DependencyInjection).Assembly));
         });
-
-        services.AddRedisDistributedCache(configuration);
-
-        return services;
     }
 
     /// <summary>

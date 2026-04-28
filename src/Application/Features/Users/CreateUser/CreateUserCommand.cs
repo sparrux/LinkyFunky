@@ -2,7 +2,7 @@ using FluentResults;
 using LinkyFunky.Domain.Entities;
 using MediatR;
 
-namespace LinkyFunky.Application.Commands;
+namespace LinkyFunky.Application.Features.Users.CreateUser;
 
 /// <summary>
 /// Creates a new anonymous user.

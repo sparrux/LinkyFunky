@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using FluentResults;
-using LinkyFunky.Domain.Contracts;
+using LinkyFunky.Domain.Interfaces;
 
 namespace LinkyFunky.Infrastructure.Services;
 

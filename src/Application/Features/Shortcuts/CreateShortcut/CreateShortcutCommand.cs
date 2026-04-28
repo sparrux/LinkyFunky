@@ -2,7 +2,7 @@ using FluentResults;
 using LinkyFunky.Application.Contracts.Responses;
 using MediatR;
 
-namespace LinkyFunky.Application.Commands;
+namespace LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 
 /// <summary>
 /// Creates a new shortcut for the specified user and URL.

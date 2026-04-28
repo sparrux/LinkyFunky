@@ -1,5 +1,5 @@
+using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Domain.Entities;
-using LinkyFunky.Domain.Repositories;
 
 namespace LinkyFunky.Infrastructure.Persistence.Repositories;
 
