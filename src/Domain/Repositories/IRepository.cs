@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using LinkyFunky.Domain.Common;
 
 namespace LinkyFunky.Domain.Repositories;
@@ -17,4 +18,5 @@ public interface IRepository<TEntity> where TEntity : Entity
     Task<TEntity?> FirstOrDefaultAsync(IQueryable<TEntity> query, Guid id, CancellationToken ctk = default);
     Task<TEntity?> FirstOrDefaultAsync(IQueryable<TEntity> query, CancellationToken ctk = default);
     Task<List<TEntity>> ToListAsync(IQueryable<TEntity> query, CancellationToken ctk = default);
+    Task<List<T>> SelectToListAsync<T>(IQueryable<TEntity> query, Expression<Func<TEntity, T>> select, CancellationToken ctk = default);
 }

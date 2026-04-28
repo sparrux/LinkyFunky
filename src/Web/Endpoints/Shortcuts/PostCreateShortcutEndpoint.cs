@@ -30,7 +30,8 @@ public sealed class PostCreateShortcutEndpoint(IMediator sender) : Endpoint<Crea
         var result = await sender.Send(new CreateShortcutCommand(userId, req.LongUrl), ctk);
         if (result.IsFailed)
         {
-            await HttpContext.Response.WriteAsJsonAsync(result, ctk);
+            HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await HttpContext.Response.WriteAsJsonAsync(result.Errors.Select(x => x.Message), ctk);
             return;
         }
 

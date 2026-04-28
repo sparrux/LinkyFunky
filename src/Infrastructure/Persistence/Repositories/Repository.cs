@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using LinkyFunky.Domain.Common;
 using LinkyFunky.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -72,5 +73,10 @@ public abstract class Repository<TEntity>(LinkyDbContext dbContext) : IRepositor
     public Task<List<TEntity>> ToListAsync(IQueryable<TEntity> query, CancellationToken ctk = default)
     {
         return query.ToListAsync(ctk);
+    }
+
+    public Task<List<T>> SelectToListAsync<T>(IQueryable<TEntity> query, Expression<Func<TEntity, T>> select, CancellationToken ctk = default)
+    {
+        return query.Select(select).ToListAsync(ctk);
     }
 }
