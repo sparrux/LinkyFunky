@@ -22,6 +22,11 @@ public sealed class RandomShortCodeGen(int codeLength) : IShortCodeGen
     /// <returns>A result containing a random URL-safe short code.</returns>
     public Result<string> Generate(string longUrl)
     {
+        if (string.IsNullOrWhiteSpace(longUrl))
+        {
+            return Result.Fail("Long URL must not be null or empty.");
+        }
+
         Span<char> buffer = stackalloc char[_codeLength];
 
         for (var index = 0; index < buffer.Length; index++)
