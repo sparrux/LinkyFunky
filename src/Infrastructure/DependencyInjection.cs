@@ -17,7 +17,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IShortCodeGen>(_ => new Base62ShortCodeGen(DefaultShortCodeLength));
+        services.AddSingleton<IShortCodeGen>(_ => new RandomShortCodeGen(DefaultShortCodeLength));
 
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IShortcutsRepository, ShortcutsRepository>();

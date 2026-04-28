@@ -3,14 +3,14 @@ using FluentResults;
 namespace LinkyFunky.Domain.Contracts;
 
 /// <summary>
-/// Defines a contract for generating short codes from full URLs.
+/// Defines a contract for generating short codes.
 /// </summary>
 public interface IShortCodeGen
 {
     /// <summary>
-    /// Generates a short code for the specified long URL.
+    /// Generates a new short code value.
     /// </summary>
-    /// <param name="longUrl">The original URL that must be converted into a short code.</param>
-    /// <returns>A result containing the generated short code in a URL-safe format.</returns>
+    /// <param name="longUrl">The original URL associated with the request context.</param>
+    /// <returns>A result containing the generated short code.</returns>
     Result<string> Generate(string longUrl);
 }
