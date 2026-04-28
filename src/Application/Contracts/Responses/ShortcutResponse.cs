@@ -5,5 +5,6 @@ namespace LinkyFunky.Application.Contracts.Responses;
 /// </summary>
 /// <param name="ShortUrl">The short URL that redirects to the original long URL.</param>
 public sealed record ShortcutResponse(
-    string ShortUrl
+    string ShortUrl,
+    string ShortCode
 );

@@ -34,7 +34,7 @@ public sealed class CreateShortcutCommandHandler(
         await shortcutsRepository.AddAsync(shortcut, ctk);
         await shortcutsRepository.UnitOfWork.SaveChangesAsync(ctk);
 
-        var response = new ShortcutResponse(builder.Build(shortcut.ShortCode));
+        var response = new ShortcutResponse(builder.Build(shortcut.ShortCode), shortcut.ShortCode);
         return Result.Ok(response);
     }
 }
