@@ -29,6 +29,8 @@ public static class DependencyInjection
             {
                 options.Cookie.Name = "LinkyFunky.Auth";
                 options.LoginPath = "/";
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                options.SlidingExpiration = true;
             });
 
         services.AddAuthorization();
