@@ -22,6 +22,11 @@ public sealed class Shortcut : Entity
     public string ShortCode { get; private set; }
 
     /// <summary>
+    /// Gets the number of redirects performed by shortcut.
+    /// </summary>
+    public int Redirects { get; private set; }
+
+    /// <summary>
     /// Gets the user who created the shortcut.
     /// </summary>
     public User User { get; private set; }
@@ -30,7 +35,7 @@ public sealed class Shortcut : Entity
     /// Gets the user ID who created the shortcut.
     /// </summary>
     public Guid UserId { get; private set; }
-
+    
     /// <summary>
     /// Creates a new <see cref="Shortcut"/> instance for the specified URL.
     /// </summary>
@@ -57,6 +62,19 @@ public sealed class Shortcut : Entity
             LongUrl = longUrl,
             ShortCode = shortCodeResult.Value
         });
+    }
+
+    /// <summary>
+    /// Updates the number of redirects performed by shortcut.
+    /// </summary>
+    /// <param name="increment">The number of redirects to increment.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="increment"/> is negative.</exception>
+    public void UpdateRedirects(int increment)
+    {
+        if (increment < 0)
+            throw new ArgumentOutOfRangeException(nameof(increment), "Increment cannot be negative.");
+
+        Redirects += increment;
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Repositories;
 
 namespace Web.Background;
 
@@ -24,7 +25,7 @@ public sealed class CountersSyncBackgroundService(
     protected override async Task ExecuteAsync(CancellationToken ctk)
     {
         var intervalMinutes = configuration.GetValue<int?>(SyncIntervalMinutesKey) ?? DefaultSyncIntervalMinutes;
-        var interval = TimeSpan.FromMinutes(Math.Max(1, intervalMinutes));
+        var interval = TimeSpan.FromMinutes(intervalMinutes);
         using var timer = new PeriodicTimer(interval);
 
         while (!ctk.IsCancellationRequested)
@@ -32,7 +33,9 @@ public sealed class CountersSyncBackgroundService(
             try
             {
                 var synced = await SyncOnceAsync(ctk);
-                logger.LogInformation("{counters} counters synchronization completed successfully.", synced);
+                
+                if (synced > 0)
+                    logger.LogInformation("{counters} counters synchronization completed successfully.", synced);
             }
             catch (OperationCanceledException) when (ctk.IsCancellationRequested)
             {
@@ -48,6 +51,11 @@ public sealed class CountersSyncBackgroundService(
         }
     }
 
+    /// <summary>
+    /// Synchronizes counters once.
+    /// </summary>
+    /// <param name="ctk">The token used to cancel the operation.</param>
+    /// <returns>The number of counters that were successfully synchronized.</returns>
     async Task<int> SyncOnceAsync(CancellationToken ctk)
     {
         using var scope = scopeFactory.CreateScope();
@@ -71,10 +79,21 @@ public sealed class CountersSyncBackgroundService(
     /// <param name="counters">Counters collected from Redis.</param>
     /// <param name="ctk">The token used to cancel the operation.</param>
     /// <returns>Keys that were successfully persisted and can be removed from Redis.</returns>
-    static Task<IReadOnlyCollection<string>> PushCountersToDatabaseAsync(
+    async Task<IReadOnlyCollection<string>> PushCountersToDatabaseAsync(
         IReadOnlyCollection<Counter> counters,
         CancellationToken ctk)
     {
-        return Task.FromResult<IReadOnlyCollection<string>>(counters.Select(static x => x.Key).ToArray());
+        await using var scope = scopeFactory.CreateAsyncScope();
+        
+        var shortcutsRepository = scope.ServiceProvider.GetRequiredService<IShortcutsRepository>();
+        var counterByCode = counters.ToDictionary(
+            x => x.Key, 
+            x => x.Value, 
+            StringComparer.Ordinal);
+        
+        await shortcutsRepository.UpdateRedirectsAsync(counterByCode, ctk);
+        await shortcutsRepository.UnitOfWork.SaveChangesAsync(ctk);
+        
+        return counters.Select(x => x.Key).ToList();
     }
 }

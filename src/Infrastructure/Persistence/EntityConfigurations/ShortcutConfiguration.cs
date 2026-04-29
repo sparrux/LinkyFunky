@@ -29,6 +29,10 @@ public sealed class ShortcutConfiguration : IEntityTypeConfiguration<Shortcut>
 
         builder.Property(x => x.UserId)
             .IsRequired();
+        
+        builder.Property(x => x.Redirects)
+            .HasDefaultValue(0)
+            .IsRequired();
 
         builder.HasOne(x => x.User)
             .WithMany(x => x.Shortcuts)
