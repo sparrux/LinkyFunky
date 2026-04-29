@@ -6,6 +6,7 @@ using LinkyFunky.Infrastructure.Persistence;
 using LinkyFunky.Infrastructure.Services.Builders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Web.Background;
 
 namespace Web;
 
@@ -37,6 +38,7 @@ public static class DependencyInjection
             });
 
         services.AddAuthorization();
+        services.AddHostedService<CountersSyncBackgroundService>();
 
         return services;
     }

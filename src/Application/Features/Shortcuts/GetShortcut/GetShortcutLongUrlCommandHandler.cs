@@ -1,5 +1,6 @@
 using FluentResults;
 using LinkyFunky.Application.Defaults;
+using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Application.Interfaces.Cache;
 using LinkyFunky.Application.Interfaces.Repositories;
 using MediatR;
@@ -11,7 +12,8 @@ namespace LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 /// </summary>
 public sealed class GetShortcutLongUrlCommandHandler(
     IShortcutsRepository shortcutsRepository,
-    ICacheService cacheService
+    ICacheService cacheService,
+    ICounterService counterService
 ) : IRequestHandler<GetShortcutLongUrlCommand, Result<string>>
 {
     /// <summary>
@@ -28,7 +30,7 @@ public sealed class GetShortcutLongUrlCommandHandler(
 
         if (await cacheService.GetAsync<string>(CacheDefaults.LongUrlKey(normalizedCode), ctk) is { } longUrlCache)
         {
-            UpdateCounter();
+            await counterService.IncrementAsync(normalizedCode, ctk);
             return Result.Ok(longUrlCache);
         }
 
@@ -42,9 +44,7 @@ public sealed class GetShortcutLongUrlCommandHandler(
         
         await cacheService.SetAsync(CacheDefaults.LongUrlKey(longUrl), longUrl, ctk);
 
-        UpdateCounter();
+        await counterService.IncrementAsync(normalizedCode, ctk);
         return Result.Ok(longUrl);
     }
-    
-    void UpdateCounter() { }
 }

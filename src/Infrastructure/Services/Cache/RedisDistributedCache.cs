@@ -60,7 +60,7 @@ public sealed class RedisDistributedCache(IDistributedCache distributedCache) : 
         var payload = await distributedCache.GetStringAsync(key, ctk);
         if (string.IsNullOrWhiteSpace(payload))
             return default;
-
+        
         return JsonSerializer.Deserialize<T>(payload, SerializerOptions);
     }
 
