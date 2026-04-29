@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace LinkyFunky.Application.Contracts.Requests;
 
 /// <summary>

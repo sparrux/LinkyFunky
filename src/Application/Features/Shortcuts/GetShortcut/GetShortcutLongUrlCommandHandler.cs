@@ -1,5 +1,7 @@
 using FluentResults;
+using LinkyFunky.Application.Defaults;
 using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Cache;
 using MediatR;
 
 namespace LinkyFunky.Application.Features.Shortcuts.GetShortcut;
@@ -7,8 +9,10 @@ namespace LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 /// <summary>
 /// Handles long URL lookup by short code.
 /// </summary>
-public sealed class GetShortcutLongUrlCommandHandler(IShortcutsRepository shortcutsRepository)
-    : IRequestHandler<GetShortcutLongUrlCommand, Result<string>>
+public sealed class GetShortcutLongUrlCommandHandler(
+    IShortcutsRepository shortcutsRepository,
+    ICacheService cacheService
+) : IRequestHandler<GetShortcutLongUrlCommand, Result<string>>
 {
     /// <summary>
     /// Returns the original long URL for a shortcut code.
@@ -22,6 +26,12 @@ public sealed class GetShortcutLongUrlCommandHandler(IShortcutsRepository shortc
         if (string.IsNullOrWhiteSpace(normalizedCode))
             return Result.Fail("Short code is required.");
 
+        if (await cacheService.GetAsync<string>(CacheDefaults.LongUrlKey(normalizedCode), ctk) is { } longUrlCache)
+        {
+            UpdateCounter();
+            return Result.Ok(longUrlCache);
+        }
+
         var longUrl = (await shortcutsRepository.SelectToListAsync(
             shortcutsRepository.QueryableSet
                 .Where(x => x.ShortCode == normalizedCode), 
@@ -29,7 +39,12 @@ public sealed class GetShortcutLongUrlCommandHandler(IShortcutsRepository shortc
 
         if (longUrl is null)
             return Result.Fail("Shortcut was not found.");
+        
+        await cacheService.SetAsync(CacheDefaults.LongUrlKey(longUrl), longUrl, ctk);
 
+        UpdateCounter();
         return Result.Ok(longUrl);
     }
+    
+    void UpdateCounter() { }
 }

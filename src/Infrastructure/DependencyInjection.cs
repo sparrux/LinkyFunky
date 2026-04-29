@@ -1,7 +1,9 @@
 using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Cache;
 using LinkyFunky.Domain.Interfaces;
 using LinkyFunky.Infrastructure.Persistence;
 using LinkyFunky.Infrastructure.Services;
+using LinkyFunky.Infrastructure.Services.Cache;
 using LinkyFunky.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +31,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IShortcutsRepository, ShortcutsRepository>();
+        services.AddScoped<ICacheService, RedisDistributedCache>();
         services.AddSingleton<IShortCodeGen>(_ => new RandomShortCodeGen(DefaultShortCodeLength));
     }
     

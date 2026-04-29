@@ -1,5 +1,7 @@
 using FluentResults;
 using LinkyFunky.Application.Contracts.Responses;
+using LinkyFunky.Application.Defaults;
+using LinkyFunky.Application.Interfaces.Cache;
 using MediatR;
 
 namespace LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
@@ -12,4 +14,7 @@ namespace LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 public sealed record CreateShortcutCommand(
     Guid UserId, 
     string LongUrl
-) : IRequest<Result<ShortcutResponse>>;
+) : IRequest<Result<ShortcutResponse>>, ICacheable
+{
+    public TimeSpan? Expiry => CacheDefaults.ShortcutsExpiry;
+}

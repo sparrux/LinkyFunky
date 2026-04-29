@@ -1,6 +1,8 @@
 using FluentResults;
 using LinkyFunky.Application.Contracts.Responses;
+using LinkyFunky.Application.Defaults;
 using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Cache;
 using LinkyFunky.Domain.Entities;
 using LinkyFunky.Domain.Interfaces;
 using MediatR;
@@ -13,7 +15,8 @@ namespace LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 public sealed class CreateShortcutCommandHandler(
     IShortcutsRepository shortcutsRepository,
     IShortCodeGen shortCodeGen,
-    IShortUrlBuilder builder
+    IShortUrlBuilder builder,
+    ICacheService cacheService
 ) : IRequestHandler<CreateShortcutCommand, Result<ShortcutResponse>>
 {
     /// <summary>
@@ -31,6 +34,8 @@ public sealed class CreateShortcutCommandHandler(
         var shortcut = shortcutResult.Value;
         await shortcutsRepository.AddAsync(shortcut, ctk);
         await shortcutsRepository.UnitOfWork.SaveChangesAsync(ctk);
+
+        await cacheService.SetAsync(CacheDefaults.LongUrlKey(shortcut.ShortCode), shortcut.LongUrl, ctk);
 
         var response = new ShortcutResponse(builder.Build(shortcut.ShortCode), shortcut.ShortCode);
         return Result.Ok(response);
