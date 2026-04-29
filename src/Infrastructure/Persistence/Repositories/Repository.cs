@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Repositories;
 using LinkyFunky.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 

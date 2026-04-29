@@ -2,7 +2,7 @@ using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 
-namespace LinkyFunky.Infrastructure.Services;
+namespace LinkyFunky.Infrastructure.Services.Builders;
 
 /// <summary>
 /// Builds public short URLs using configured domain settings.

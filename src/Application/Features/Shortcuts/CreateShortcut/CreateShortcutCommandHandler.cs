@@ -3,6 +3,7 @@ using LinkyFunky.Application.Contracts.Responses;
 using LinkyFunky.Application.Defaults;
 using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Application.Interfaces.Cache;
+using LinkyFunky.Application.Interfaces.Repositories;
 using LinkyFunky.Domain.Entities;
 using LinkyFunky.Domain.Interfaces;
 using MediatR;

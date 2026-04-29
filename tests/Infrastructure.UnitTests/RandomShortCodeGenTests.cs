@@ -1,4 +1,4 @@
-using LinkyFunky.Infrastructure.Services;
+using LinkyFunky.Infrastructure.Services.ShortCodeGen;
 
 namespace Infrastructure.UnitTests;
 

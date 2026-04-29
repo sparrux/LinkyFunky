@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using LinkyFunky.Domain.Common;
 
-namespace LinkyFunky.Application.Interfaces;
+namespace LinkyFunky.Application.Interfaces.Repositories;
 
 public interface IRepository<TEntity> where TEntity : Entity
 {

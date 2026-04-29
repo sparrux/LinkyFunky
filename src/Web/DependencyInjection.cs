@@ -3,7 +3,7 @@ using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using LinkyFunky.Infrastructure.Persistence;
-using LinkyFunky.Infrastructure.Services;
+using LinkyFunky.Infrastructure.Services.Builders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

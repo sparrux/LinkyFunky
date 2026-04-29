@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using FluentResults;
 using LinkyFunky.Application.Features.Users.CreateUser;
-using LinkyFunky.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

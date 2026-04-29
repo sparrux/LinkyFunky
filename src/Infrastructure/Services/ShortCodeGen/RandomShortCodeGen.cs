@@ -1,8 +1,7 @@
-using System.Security.Cryptography;
 using FluentResults;
 using LinkyFunky.Domain.Interfaces;
 
-namespace LinkyFunky.Infrastructure.Services;
+namespace LinkyFunky.Infrastructure.Services.ShortCodeGen;
 
 /// <summary>
 /// Generates URL-safe random short codes without binding them to the source URL.

@@ -1,7 +1,7 @@
 using FluentResults;
 using LinkyFunky.Application.Defaults;
-using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Application.Interfaces.Cache;
+using LinkyFunky.Application.Interfaces.Repositories;
 using MediatR;
 
 namespace LinkyFunky.Application.Features.Shortcuts.GetShortcut;

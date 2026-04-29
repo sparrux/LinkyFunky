@@ -1,5 +1,5 @@
 using LinkyFunky.Infrastructure.Options;
-using LinkyFunky.Infrastructure.Services;
+using LinkyFunky.Infrastructure.Services.Builders;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.UnitTests;

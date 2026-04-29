@@ -3,7 +3,7 @@ using System.Text;
 using FluentResults;
 using LinkyFunky.Domain.Interfaces;
 
-namespace LinkyFunky.Infrastructure.Services;
+namespace LinkyFunky.Infrastructure.Services.ShortCodeGen;
 
 /// <summary>
 /// Generates deterministic short codes by encoding a URL hash with the Base62 alphabet.

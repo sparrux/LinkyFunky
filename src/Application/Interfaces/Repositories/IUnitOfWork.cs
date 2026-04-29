@@ -1,4 +1,4 @@
-namespace LinkyFunky.Application.Interfaces;
+namespace LinkyFunky.Application.Interfaces.Repositories;
 
 /// <summary>
 /// Defines a unit of work contract for transactional data persistence operations.

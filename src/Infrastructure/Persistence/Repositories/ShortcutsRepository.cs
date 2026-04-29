@@ -1,4 +1,4 @@
-using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Repositories;
 using LinkyFunky.Domain.Entities;
 
 namespace LinkyFunky.Infrastructure.Persistence.Repositories;

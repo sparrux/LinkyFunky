@@ -1,5 +1,5 @@
 using FluentResults;
-using LinkyFunky.Application.Interfaces;
+using LinkyFunky.Application.Interfaces.Repositories;
 using LinkyFunky.Domain.Entities;
 using MediatR;
 
