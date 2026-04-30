@@ -14,7 +14,7 @@ public sealed class GetRedirectByShortCodeEndpoint(IMediator sender)
 {
     public override void Configure()
     {
-        Get("/{shortCode}");
+        Get("/r/{shortCode}");
     }
 
     public override async Task HandleAsync(CancellationToken ctk)
