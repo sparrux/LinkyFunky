@@ -7,7 +7,7 @@ public class Base62ShortCodeGenTests
     const int DefaultCodeLength = 5;
 
     [Fact]
-    public void Generate_ShouldReturnDeterministicCode_ForSameUrl()
+    public void Generate_WhenSameUrlProvided_ReturnsDeterministicCode()
     {
         var sut = CreateSut();
         var longUrl = "https://example.com/some/path?q=1";
@@ -21,7 +21,7 @@ public class Base62ShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldReturnCodeWithFixedLength()
+    public void Generate_WhenLongUrlIsValid_ReturnsCodeWithFixedLength()
     {
         var sut = CreateSut();
 
@@ -32,7 +32,7 @@ public class Base62ShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldReturnOnlyBase62Characters()
+    public void Generate_WhenLongUrlIsValid_ReturnsOnlyBase62Characters()
     {
         var sut = CreateSut();
 
@@ -43,7 +43,7 @@ public class Base62ShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldIgnoreLeadingAndTrailingWhitespace()
+    public void Generate_WhenUrlHasLeadingAndTrailingWhitespace_ReturnsSameCodeAsTrimmedUrl()
     {
         var sut = CreateSut();
         var cleanUrl = "https://example.com/trim";
@@ -61,7 +61,7 @@ public class Base62ShortCodeGenTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("   ")]
-    public void Generate_ShouldReturnFailure_WhenUrlIsEmptyOrWhitespace(string longUrl)
+    public void Generate_WhenUrlIsEmptyOrWhitespace_ReturnsFailure(string longUrl)
     {
         var sut = CreateSut();
 
@@ -72,7 +72,7 @@ public class Base62ShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldReturnFailure_WhenUrlIsNull()
+    public void Generate_WhenUrlIsNull_ReturnsFailure()
     {
         var sut = CreateSut();
 
@@ -83,7 +83,7 @@ public class Base62ShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldUseConfiguredLength()
+    public void Generate_WhenCodeLengthIsConfigured_ReturnsCodeWithConfiguredLength()
     {
         var codeLength = 12;
         var sut = CreateSut(codeLength);
@@ -97,7 +97,7 @@ public class Base62ShortCodeGenTests
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    public void Constructor_ShouldThrowArgumentOutOfRangeException_WhenCodeLengthIsNotPositive(int codeLength)
+    public void Constructor_WhenCodeLengthIsNotPositive_ThrowsArgumentOutOfRangeException(int codeLength)
     {
         var exception = Assert.Throws<ArgumentOutOfRangeException>(() => CreateSut(codeLength));
 

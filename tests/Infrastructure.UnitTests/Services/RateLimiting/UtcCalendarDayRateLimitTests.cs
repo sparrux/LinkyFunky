@@ -8,7 +8,7 @@ namespace Infrastructure.UnitTests.Services.RateLimiting;
 public sealed class UtcCalendarDayRateLimitTests
 {
     [Fact]
-    public void GetSecondsUntilNextUtcDay_one_second_before_midnight_returns_one()
+    public void GetSecondsUntilNextUtcDay_OneSecondBeforeMidnight_ReturnsOne()
     {
         var utcNow = new DateTime(2026, 4, 30, 23, 59, 59, DateTimeKind.Utc);
 
@@ -18,7 +18,7 @@ public sealed class UtcCalendarDayRateLimitTests
     }
 
     [Fact]
-    public void GetTimeSpanUntilNextUtcDay_at_midnight_returns_full_day()
+    public void GetTimeSpanUntilNextUtcDay_AtMidnight_ReturnsFullDay()
     {
         var utcNow = new DateTime(2026, 5, 1, 0, 0, 0, DateTimeKind.Utc);
 

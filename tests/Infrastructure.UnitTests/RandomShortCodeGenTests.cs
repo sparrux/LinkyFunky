@@ -7,7 +7,7 @@ public class RandomShortCodeGenTests
     const int DefaultCodeLength = 8;
 
     [Fact]
-    public void Generate_ShouldReturnCodeWithFixedLength()
+    public void Generate_WhenLongUrlIsValid_ReturnsCodeWithFixedLength()
     {
         var sut = CreateSut();
 
@@ -18,7 +18,7 @@ public class RandomShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldReturnOnlyBase62Characters()
+    public void Generate_WhenLongUrlIsValid_ReturnsOnlyBase62Characters()
     {
         var sut = CreateSut();
 
@@ -32,7 +32,7 @@ public class RandomShortCodeGenTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("   ")]
-    public void Generate_ShouldReturnFailure_WhenLongUrlIsEmptyOrWhitespace(string longUrl)
+    public void Generate_WhenLongUrlIsEmptyOrWhitespace_ReturnsFailure(string longUrl)
     {
         var sut = CreateSut();
 
@@ -43,7 +43,7 @@ public class RandomShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldReturnFailure_WhenLongUrlIsNull()
+    public void Generate_WhenLongUrlIsNull_ReturnsFailure()
     {
         var sut = CreateSut();
 
@@ -54,7 +54,7 @@ public class RandomShortCodeGenTests
     }
 
     [Fact]
-    public void Generate_ShouldUseConfiguredLength()
+    public void Generate_WhenCodeLengthIsConfigured_ReturnsCodeWithConfiguredLength()
     {
         var codeLength = 12;
         var sut = CreateSut(codeLength);
@@ -68,7 +68,7 @@ public class RandomShortCodeGenTests
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    public void Constructor_ShouldThrowArgumentOutOfRangeException_WhenCodeLengthIsNotPositive(int codeLength)
+    public void Constructor_WhenCodeLengthIsNotPositive_ThrowsArgumentOutOfRangeException(int codeLength)
     {
         var exception = Assert.Throws<ArgumentOutOfRangeException>(() => CreateSut(codeLength));
 

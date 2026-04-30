@@ -1,4 +1,5 @@
 ---
+description: 
 alwaysApply: true
 ---
 
@@ -11,3 +12,5 @@ alwaysApply: true
 
 Для юнит тестов использовать библиотеку xUnit.
 Для интеграционных тестов использовать библиотеку Testcontainers.
+
+Используй именование тестов в стиле MethodName_Scenario_ExpectedResult.

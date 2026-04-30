@@ -7,7 +7,7 @@ namespace Infrastructure.UnitTests;
 public class ShortUrlBuilderTests
 {
     [Fact]
-    public void Constructor_ShouldThrowArgumentException_WhenBaseUrlIsInvalid()
+    public void Constructor_WhenBaseUrlIsInvalid_ThrowsArgumentException()
     {
         var options = CreateDomainOptions("not-a-valid-url");
 
@@ -23,7 +23,7 @@ public class ShortUrlBuilderTests
     [InlineData("https://linkyfunky.com", "/abc123", "https://linkyfunky.com/abc123")]
     [InlineData("https://linkyfunky.com/", "/abc123", "https://linkyfunky.com/abc123")]
     [InlineData("https://linkyfunky.com", "///abc123", "https://linkyfunky.com/abc123")]
-    public void Build_ShouldReturnExpectedShortUrl(string baseUrl, string shortCode, string expectedShortUrl)
+    public void Build_WhenBaseUrlAndShortCodeAreValid_ReturnsExpectedShortUrl(string baseUrl, string shortCode, string expectedShortUrl)
     {
         var sut = CreateSut(baseUrl);
 

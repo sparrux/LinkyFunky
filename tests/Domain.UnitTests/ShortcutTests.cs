@@ -7,7 +7,7 @@ namespace Domain.UnitTests;
 public class ShortcutTests
 {
     [Fact]
-    public void Create_ShouldReturnSuccess_WhenUrlIsValidAndGeneratorReturnsCode()
+    public void Create_WhenUrlIsValidAndGeneratorReturnsCode_ReturnsSuccess()
     {
         var userId = Guid.NewGuid();
         var longUrl = "https://example.com/path?q=1";
@@ -27,7 +27,7 @@ public class ShortcutTests
     [InlineData(" ")]
     [InlineData("ftp://example.com")]
     [InlineData("example.com")]
-    public void Create_ShouldReturnFailure_WhenUrlIsInvalid(string longUrl)
+    public void Create_WhenUrlIsInvalid_ReturnsFailure(string longUrl)
     {
         var shortCodeGen = new StubShortCodeGen(Result.Ok("ABC123"));
 
@@ -40,7 +40,7 @@ public class ShortcutTests
     }
 
     [Fact]
-    public void Create_ShouldReturnFailure_WhenGeneratorReturnsFailure()
+    public void Create_WhenGeneratorReturnsFailure_ReturnsFailure()
     {
         var expectedMessage = "Generator failure.";
         var shortCodeGen = new StubShortCodeGen(Result.Fail(expectedMessage));
