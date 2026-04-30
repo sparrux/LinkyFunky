@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Web.Extensions;
 
 namespace Web.Authentication;
 
@@ -32,7 +33,7 @@ public sealed class AnonymouslyAuthMiddleware(RequestDelegate next)
 
         if (signInResult.IsFailed)
         {
-            await httpContext.Response.WriteAsJsonAsync(signInResult);
+            await httpContext.Response.SendResultResponseAsync(signInResult);
             return;            
         }
 

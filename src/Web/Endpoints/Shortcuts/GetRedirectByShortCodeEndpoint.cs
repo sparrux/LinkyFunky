@@ -2,6 +2,7 @@ using FastEndpoints;
 using LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Web.Extensions;
 
 namespace Web.Endpoints.Shortcuts;
 
@@ -30,8 +31,8 @@ public sealed class GetRedirectByShortCodeEndpoint(IMediator sender)
         var result = await sender.Send(new GetShortcutLongUrlCommand(shortCode), ctk);
         if (result.IsFailed)
         {
-            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-            await HttpContext.Response.WriteAsJsonAsync(result.Errors.Select(x => x.Message), ctk);
+            await HttpContext.Response.SendResultResponseAsync(
+                result, errorCode: StatusCodes.Status404NotFound, ctk: ctk);
             return;
         }
 

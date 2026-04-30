@@ -15,6 +15,6 @@ public class GetHealthCheckEndpoint : EndpointWithoutRequest
 
     public override Task HandleAsync(CancellationToken ctk)
     {
-        return HttpContext.Response.SendStringAsync("alive", StatusCodes.Status200OK, "text/plain", ctk);
+        return HttpContext.Response.SendStatusCodeAsync(StatusCodes.Status200OK, ctk);
     }
 }
