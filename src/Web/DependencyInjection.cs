@@ -15,6 +15,12 @@ namespace Web;
 /// </summary>
 public static class DependencyInjection
 {
+    /// <summary> 
+    /// Adds Web-layer services to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The application configuration.</param>
+    /// <returns>The service collection.</returns>
     public static IServiceCollection AddWebServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOpenApi();

@@ -19,6 +19,12 @@ public static class DependencyInjection
     const int DefaultShortCodeLength = 8;
     const string RedisInstanceNameKey = "Redis:InstanceName";
 
+    /// <summary>
+    /// Adds infrastructure services to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The application configuration.</param>
+    /// <returns>The service collection.</returns>
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -30,6 +36,10 @@ public static class DependencyInjection
         return services;
     }
     
+    /// <summary>
+    /// Registers repository, cache, counter, and short-code generator implementations.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
     static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUsersRepository, UsersRepository>();
@@ -39,6 +49,11 @@ public static class DependencyInjection
         services.AddSingleton<IShortCodeGen>(_ => new RandomShortCodeGen(DefaultShortCodeLength));
     }
     
+    /// <summary>
+    /// Adds database services to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The application configuration.</param>
     static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("linkyfunky");

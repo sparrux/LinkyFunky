@@ -4,7 +4,7 @@ using LinkyFunky.Domain.Interfaces;
 namespace LinkyFunky.Infrastructure.Services.ShortCodeGen;
 
 /// <summary>
-/// Generates URL-safe random short codes without binding them to the source URL.
+/// Generates random short codes without binding them to the source URL.
 /// </summary>
 public sealed class RandomShortCodeGen(int codeLength) : IShortCodeGen
 {
@@ -18,7 +18,7 @@ public sealed class RandomShortCodeGen(int codeLength) : IShortCodeGen
     /// Generates a random short code with the configured fixed length.
     /// </summary>
     /// <param name="longUrl">The original URL. The value is accepted for contract compatibility and ignored.</param>
-    /// <returns>A result containing a random URL-safe short code.</returns>
+    /// <returns>A result containing a random short code.</returns>
     public Result<string> Generate(string longUrl)
     {
         if (string.IsNullOrWhiteSpace(longUrl))

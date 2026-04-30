@@ -3,6 +3,10 @@ using LinkyFunky.Domain.Common;
 
 namespace LinkyFunky.Application.Interfaces.Repositories;
 
+/// <summary>
+/// Defines a contract for a repository pattern implementation.
+/// </summary>
+/// <typeparam name="TEntity">The entity type handled by this repository.</typeparam>
 public interface IRepository<TEntity> where TEntity : Entity
 {
     IUnitOfWork UnitOfWork { get; }
