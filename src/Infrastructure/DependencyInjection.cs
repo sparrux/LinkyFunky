@@ -2,9 +2,11 @@ using LinkyFunky.Application.Interfaces.Cache;
 using LinkyFunky.Application.Interfaces.Repositories;
 using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Domain.Interfaces;
+using LinkyFunky.Infrastructure.Options;
 using LinkyFunky.Infrastructure.Persistence;
 using LinkyFunky.Infrastructure.Services.Cache;
 using LinkyFunky.Infrastructure.Services.Counters;
+using LinkyFunky.Infrastructure.Services.RateLimiting;
 using LinkyFunky.Infrastructure.Persistence.Repositories;
 using LinkyFunky.Infrastructure.Services.ShortCodeGen;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.Configure<RateLimitOptions>(configuration.GetSection(RateLimitOptions.SectionName));
         services.AddServices();
         services.AddDatabase(configuration);
         services.AddRedisDistributedCache(configuration);
@@ -46,6 +49,7 @@ public static class DependencyInjection
         services.AddScoped<IShortcutsRepository, ShortcutsRepository>();
         services.AddScoped<ICacheService, RedisDistributedCache>();
         services.AddScoped<ICounterService, RedisCounterService>();
+        services.AddSingleton<IUserDailyRateLimitService, RedisUserDailyRateLimitService>();
         services.AddSingleton<IShortCodeGen>(_ => new RandomShortCodeGen(DefaultShortCodeLength));
     }
     
