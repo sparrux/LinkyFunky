@@ -1,6 +1,8 @@
 using System.Security.Claims;
+using FluentResults;
 using LinkyFunky.Application.Interfaces;
 using Web.Defaults;
+using Web.Extensions;
 
 namespace Web.Middleware;
 
@@ -76,10 +78,10 @@ public sealed class UserDailyRateLimitMiddleware(RequestDelegate next)
         if (shouldWriteRemainingHeader)
             httpContext.Response.Headers.Append(AppHeaderNames.RateLimitRemaining, "0");
 
-        httpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-        await httpContext.Response.WriteAsJsonAsync(
-            new { error = "Rate limit exceeded", window = "utc_day" },
-            httpContext.RequestAborted);
+        await httpContext.Response.SendResultResponseAsync(
+            Result.Fail("Rate limit exceeded"),
+            errorCode: StatusCodes.Status429TooManyRequests,
+            ctk: httpContext.RequestAborted);
     }
 
     static bool IsCreateShortcutRequest(HttpRequest request) =>

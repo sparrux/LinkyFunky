@@ -5,6 +5,7 @@ using LinkyFunky.Application.Contracts.Responses;
 using LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Web.Extensions;
 
 namespace Web.Endpoints.Shortcuts;
 
@@ -23,20 +24,18 @@ public sealed class PostCreateShortcutEndpoint(IMediator sender) : Endpoint<Crea
     {
         if (!TryGetUserId(HttpContext.User, out var userId))
         {
-            HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            await HttpContext.Response.SendStatusCodeAsync(StatusCodes.Status401Unauthorized, ctk);
             return;
         }
 
         var result = await sender.Send(new CreateShortcutCommand(userId, req.LongUrl), ctk);
         if (result.IsFailed)
         {
-            HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await HttpContext.Response.WriteAsJsonAsync(result.Errors.Select(x => x.Message), ctk);
+            await HttpContext.Response.SendResultResponseAsync(result, ctk: ctk);
             return;
         }
 
-        HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-        await HttpContext.Response.WriteAsJsonAsync(result.Value, ctk);
+        await HttpContext.Response.SendResultResponseAsync(result, ctk: ctk);
     }
 
     static bool TryGetUserId(ClaimsPrincipal user, out Guid userId)
