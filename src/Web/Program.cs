@@ -4,8 +4,7 @@ using LinkyFunky.ServiceDefaults;
 using Scalar.AspNetCore;
 using FastEndpoints;
 using Web;
-using Web.Authentication;
-using Web.Middleware;
+using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

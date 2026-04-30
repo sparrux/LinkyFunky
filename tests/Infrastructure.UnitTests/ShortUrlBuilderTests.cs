@@ -40,7 +40,7 @@ public class ShortUrlBuilderTests
 
     static IOptions<DomainOptions> CreateDomainOptions(string baseUrl)
     {
-        return Microsoft.Extensions.Options.Options.Create(new DomainOptions
+        return Options.Create(new DomainOptions
         {
             BaseUrl = baseUrl
         });

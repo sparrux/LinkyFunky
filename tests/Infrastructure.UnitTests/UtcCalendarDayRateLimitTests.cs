@@ -1,6 +1,6 @@
 using LinkyFunky.Infrastructure.Services.RateLimiting;
 
-namespace Infrastructure.UnitTests.Services.RateLimiting;
+namespace Infrastructure.UnitTests;
 
 /// <summary>
 /// Tests UTC calendar-day helpers used for Redis TTL and Retry-After headers.

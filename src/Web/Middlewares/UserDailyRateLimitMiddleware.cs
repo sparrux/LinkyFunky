@@ -4,7 +4,7 @@ using LinkyFunky.Application.Interfaces;
 using Web.Defaults;
 using Web.Extensions;
 
-namespace Web.Middleware;
+namespace Web.Middlewares;
 
 /// <summary>
 /// Applies per-user daily Redis-backed quotas to shortcut creation and redirect endpoints.

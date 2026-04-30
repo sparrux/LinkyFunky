@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Web.Extensions;
 
-namespace Web.Authentication;
+namespace Web.Middlewares;
 
 /// <summary>
 /// Automatically signs in an anonymous user for endpoints that require authorization.
