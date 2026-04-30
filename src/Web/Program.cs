@@ -5,6 +5,7 @@ using Scalar.AspNetCore;
 using FastEndpoints;
 using Web;
 using Web.Authentication;
+using Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<AnonymouslyAuthMiddleware>();
 app.UseAuthorization();
+app.UseMiddleware<UserDailyRateLimitMiddleware>();
 app.UseFastEndpoints();
 
 app.Run();
