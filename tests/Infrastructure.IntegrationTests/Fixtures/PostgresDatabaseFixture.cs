@@ -2,15 +2,14 @@ using LinkyFunky.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.PostgreSql;
 
-namespace Infrastructure.IntegrationTests;
+namespace Infrastructure.IntegrationTests.Fixtures;
 
 /// <summary>
 /// Provides a PostgreSQL Testcontainer and creates isolated EF Core contexts for integration tests.
 /// </summary>
 public sealed class PostgresDatabaseFixture : IAsyncLifetime
 {
-    readonly PostgreSqlContainer _container = new PostgreSqlBuilder()
-        .WithImage("postgres:17-alpine")
+    readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:17-alpine")
         .WithDatabase("linky_funky_tests")
         .WithUsername("postgres")
         .WithPassword("postgres")

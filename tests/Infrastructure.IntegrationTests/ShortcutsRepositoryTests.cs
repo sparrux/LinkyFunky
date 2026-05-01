@@ -1,4 +1,5 @@
 using FluentResults;
+using Infrastructure.IntegrationTests.Fixtures;
 using LinkyFunky.Domain.Entities;
 using LinkyFunky.Domain.Interfaces;
 using LinkyFunky.Infrastructure.Persistence.Repositories;
