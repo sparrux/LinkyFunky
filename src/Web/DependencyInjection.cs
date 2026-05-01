@@ -1,11 +1,8 @@
 using FastEndpoints;
-using LinkyFunky.Application.Interfaces;
 using LinkyFunky.Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using LinkyFunky.Infrastructure.Persistence;
-using LinkyFunky.Infrastructure.Services.Builders;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Web.Background;
 
 namespace Web;
@@ -25,11 +22,6 @@ public static class DependencyInjection
     {
         services.AddOpenApi();
         services.AddFastEndpoints();
-        services.AddSingleton<IShortUrlBuilder>(s =>
-        {
-            var domainOptions = s.GetRequiredService<IOptions<DomainOptions>>();
-            return new ShortUrlBuilder(domainOptions);
-        });
         
         services.Configure<DomainOptions>(configuration.GetSection(DomainOptions.SectionName));
         

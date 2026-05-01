@@ -33,3 +33,5 @@ app.UseMiddleware<UserDailyRateLimitMiddleware>();
 app.UseFastEndpoints();
 
 app.Run();
+
+public partial class Program;
