@@ -50,7 +50,7 @@ export default function(data) {
     const redirectRes = http.get(`${baseUrl}/r/${randomShortcut}`, { redirects: 0 });
 
     check(redirectRes, {
-        'status is 302': (res) => res.status === 302,
+        'status is 307': (res) => res.status === 307,
     });
 
     sleep(0.5);
