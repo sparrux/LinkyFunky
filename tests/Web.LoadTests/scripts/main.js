@@ -27,7 +27,7 @@ export function setup() {
                 longUrl: 'https://google.com/' 
             }),
             {
-              headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' }
             }
         );
 
