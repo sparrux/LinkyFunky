@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+  
+scrape_configs: 
+  - job_name: "aspire-apps"
+    static_configs: 
+      - targets: 
+        - 'host.docker.internal:4010'
+    metrics_path: '/metrics'
+    scheme: 'http'

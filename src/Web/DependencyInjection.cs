@@ -15,11 +15,13 @@ public static class DependencyInjection
     /// <summary> 
     /// Adds Web-layer services to the service collection.
     /// </summary>
-    /// <param name="services">The service collection.</param>
+    /// <param name="builder">The hosting builder.</param>
     /// <param name="configuration">The application configuration.</param>
     /// <returns>The service collection.</returns>
-    public static IServiceCollection AddWebServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddWebServices(this IHostApplicationBuilder builder, IConfiguration configuration)
     {
+        var services = builder.Services;
+        
         services.AddOpenApi();
         services.AddFastEndpoints();
         
