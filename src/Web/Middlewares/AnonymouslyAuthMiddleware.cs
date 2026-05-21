@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Web.Extensions;
+using Web.Metrics;
 
 namespace Web.Middlewares;
 
 /// <summary>
 /// Automatically signs in an anonymous user for endpoints that require authorization.
 /// </summary>
-public sealed class AnonymouslyAuthMiddleware(RequestDelegate next)
+public sealed class AnonymouslyAuthMiddleware(UserMetrics userMetrics, RequestDelegate next)
 {
     /// <summary>
     /// Invokes the middleware to automatically sign in an anonymous user for endpoints that require authorization.
@@ -68,12 +69,14 @@ public sealed class AnonymouslyAuthMiddleware(RequestDelegate next)
     /// <param name="httpContext">The HTTP context.</param>
     /// <param name="sender">The mediator instance.</param>
     /// <returns>A result containing the signed in user.</returns>
-    static async Task<Result> SignInAnonymouslyAsync(HttpContext httpContext, IMediator sender)
+    async Task<Result> SignInAnonymouslyAsync(HttpContext httpContext, IMediator sender)
     {
         var userResult = await sender.Send(new CreateUserCommand());
 
         if (userResult.IsFailed)
             return Result.Fail(userResult.Errors);
+        
+        userMetrics.NewUserCounter.Add(1);
 
         var user = userResult.Value;
         

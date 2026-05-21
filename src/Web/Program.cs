@@ -25,7 +25,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<AnonymouslyAuthMiddleware>();
 app.UseAuthorization();

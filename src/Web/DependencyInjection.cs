@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using LinkyFunky.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Web.Background;
+using Web.Metrics;
 
 namespace Web;
 
@@ -40,6 +41,8 @@ public static class DependencyInjection
         services.AddAuthorization();
         services.AddHostedService<CountersSyncBackgroundService>();
 
+        builder.AddOpenTelemetry();
+
         return services;
     }
 
@@ -55,5 +58,16 @@ public static class DependencyInjection
         
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () => await dbContext.Database.MigrateAsync());
+    }
+
+    static IHostApplicationBuilder AddOpenTelemetry(this IHostApplicationBuilder builder)
+    {
+        builder.Services.AddOpenTelemetry()
+            .WithMetrics(metrics => metrics
+                .AddMeter(UserMetrics.InstrumentsSourceName));
+
+        builder.Services.AddSingleton<UserMetrics>();
+        
+        return builder;
     }
 }
