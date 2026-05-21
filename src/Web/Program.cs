@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddWebServices(builder.Configuration);
+builder.AddWebServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -25,7 +25,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 app.UseAuthentication();
 app.UseMiddleware<AnonymouslyAuthMiddleware>();
 app.UseAuthorization();

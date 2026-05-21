@@ -1,7 +1,8 @@
 import http from 'k6/http';
 import { sleep, check } from 'k6';
 
-const baseUrl = __ENV.services__web__http__0;
+// Don't use http requests. Only https.
+const baseUrl = __ENV.services__web__https__0;
 console.log('Base URL: ' + baseUrl);
 
 export const options = {
@@ -50,7 +51,7 @@ export default function(data) {
     const redirectRes = http.get(`${baseUrl}/r/${randomShortcut}`, { redirects: 0 });
 
     check(redirectRes, {
-        'status is 307': (res) => res.status === 307,
+        'status is 302': (res) => res.status === 302,
     });
 
     sleep(0.5);
