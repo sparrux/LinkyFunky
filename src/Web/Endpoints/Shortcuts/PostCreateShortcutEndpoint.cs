@@ -4,6 +4,7 @@ using LinkyFunky.Application.Contracts.Requests;
 using LinkyFunky.Application.Contracts.Responses;
 using LinkyFunky.Application.Features.Shortcuts.CreateShortcut;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Web.Extensions;
 
@@ -17,6 +18,7 @@ public sealed class PostCreateShortcutEndpoint(IMediator sender) : Endpoint<Crea
 {
     public override void Configure()
     {
+        AuthSchemes(JwtBearerDefaults.AuthenticationScheme);
         Post("/shortcuts");
     }
 
@@ -36,7 +38,7 @@ public sealed class PostCreateShortcutEndpoint(IMediator sender) : Endpoint<Crea
         }
 
         await HttpContext.Response.SendResultResponseAsync(result, ctk: ctk);
-    }
+     }
 
     static bool TryGetUserId(ClaimsPrincipal user, out Guid userId)
     {

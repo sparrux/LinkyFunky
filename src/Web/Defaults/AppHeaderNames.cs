@@ -1,6 +1,6 @@
 namespace Web.Defaults;
 
-internal static class AppHeaderNames
+static class AppHeaderNames
 { 
     public const string RetryAfter = "Retry-After";
     public const string RateLimitLimit = "RateLimit-Limit";

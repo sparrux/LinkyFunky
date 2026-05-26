@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseMiddleware<AnonymouslyAuthMiddleware>();
+app.UseMiddleware<GuestMiddleware>();
 app.UseAuthorization();
 app.UseMiddleware<UserDailyRateLimitMiddleware>();
 app.UseFastEndpoints();

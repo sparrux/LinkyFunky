@@ -15,7 +15,13 @@ public sealed class UserMetrics
             name: "app.users_created",
             unit: "{user}",
             description: "Number of new users");
+        
+        GuestUserCounter = meter.CreateCounter<long>(
+            name: "app.guest_users_created",
+            unit: "{guest}",
+            description: "Number of guest users");
     }
 
     public Counter<long> NewUserCounter { get; }
+    public Counter<long> GuestUserCounter { get; }
 }

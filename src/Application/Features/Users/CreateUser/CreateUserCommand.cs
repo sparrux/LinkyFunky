@@ -7,4 +7,4 @@ namespace LinkyFunky.Application.Features.Users.CreateUser;
 /// <summary>
 /// Creates a new anonymous user.
 /// </summary>
-public sealed record CreateUserCommand : IRequest<Result<User>>;
+public sealed record CreateUserCommand(Guid UserId = default) : IRequest<Result<User>>;
