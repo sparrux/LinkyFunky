@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using LinkyFunky.Application.Contracts.Requests;
 using LinkyFunky.Application.Contracts.Responses;
@@ -9,9 +10,25 @@ namespace Web.IntegrationTests;
 public sealed class PostCreateShortcutEndpointTests(WebIntegrationTestFactory factory) : IClassFixture<WebIntegrationTestFactory>
 {
     [Fact]
+    public async Task PostCreateShortcutEndpoint_WhenUnauthorized_ReturnsUnauthorizedResponse()
+    {
+        using var client = factory.CreateClient();
+        var request = new CreateShortcutRequest
+        {
+            LongUrl = "https://example.com/articles/test"
+        };
+        
+        var payload = await client.PostAsJsonAsync("/shortcuts", request);
+        
+        Assert.Equal(HttpStatusCode.Unauthorized, payload.StatusCode);
+    }
+    
+    [Fact]
     public async Task PostCreateShortcutEndpoint_WhenRequestIsValid_ReturnsShortcutAndPersistsEntity()
     {
-        var client = factory.CreateClient();
+        using var client = factory.CreateClient();
+        await AuthorizeClient(client);
+        
         var request = new CreateShortcutRequest
         {
             LongUrl = "https://example.com/articles/test"
@@ -40,7 +57,9 @@ public sealed class PostCreateShortcutEndpointTests(WebIntegrationTestFactory fa
     [InlineData("example.com")]
     public async Task PostCreateShortcutEndpoint_WhenRequestIsInvalid_ReturnsErrorResponseList(string invalidUrl)
     {
-        var client = factory.CreateClient();
+        using var client = factory.CreateClient();
+        await AuthorizeClient(client);
+        
         var request = new CreateShortcutRequest
         {
             LongUrl = invalidUrl
@@ -53,5 +72,23 @@ public sealed class PostCreateShortcutEndpointTests(WebIntegrationTestFactory fa
         var payload = await response.Content.ReadFromJsonAsync<ErrorResponseList>();
         Assert.NotNull(payload);
         Assert.Single(payload);
+    }
+
+    async Task AuthorizeClient(HttpClient client)
+    {
+        var accessToken = await GetAccessTokenAsync();
+        client.DefaultRequestHeaders.Authorization = new("Bearer", accessToken);
+    }
+
+    async Task<string> GetAccessTokenAsync()
+    {
+        using var client = factory.CreateClient();
+
+        var tokenResponse = await client.GetFromJsonAsync<TokenResponse>("/reg");
+
+        if (string.IsNullOrWhiteSpace(tokenResponse?.AccessToken))
+            throw new InvalidDataException("Failed to get access token");
+        
+        return tokenResponse.AccessToken;
     }
 }
