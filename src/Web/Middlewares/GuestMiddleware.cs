@@ -4,6 +4,10 @@ using Web.Metrics;
 
 namespace Web.Middlewares;
 
+/// <summary>
+/// Applies information to the guest cookie that is not authenticated in the system.
+/// </summary>
+/// <param name="next"></param>
 sealed class GuestMiddleware(RequestDelegate next)
 {
     public Task InvokeAsync(HttpContext ctx, IGuestService guestService, UserMetrics userMetrics)

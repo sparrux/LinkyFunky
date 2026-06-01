@@ -1,8 +1,8 @@
+using FastEndpoints;
 using LinkyFunky.Application;
 using LinkyFunky.Infrastructure;
 using LinkyFunky.ServiceDefaults;
 using Scalar.AspNetCore;
-using FastEndpoints;
 using Web;
 using Web.Middlewares;
 

@@ -2,7 +2,6 @@ using System.Net;
 using FluentResults;
 using LinkyFunky.Domain.Entities;
 using LinkyFunky.Domain.Interfaces;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Web.IntegrationTests;
 

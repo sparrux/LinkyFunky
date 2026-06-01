@@ -1,10 +1,7 @@
 using System.Text;
 using FastEndpoints;
 using LinkyFunky.Application.Interfaces;
-using LinkyFunky.Infrastructure.Options;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using LinkyFunky.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Web.Background;
@@ -33,16 +30,6 @@ public static class DependencyInjection
         
         builder.AddConfiguredAuthentication();
         
-        // services
-        //     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        //     .AddCookie(options =>
-        //     {
-        //         options.Cookie.Name = "LinkyFunky.Auth";
-        //         options.LoginPath = "/";
-        //         options.ExpireTimeSpan = TimeSpan.FromDays(7);
-        //         options.SlidingExpiration = true;
-        //     });
-
         services.AddAuthorization();
         services.AddHostedService<CountersSyncBackgroundService>();
 
@@ -68,6 +55,11 @@ public static class DependencyInjection
         await strategy.ExecuteAsync(async () => await dbContext.Database.MigrateAsync());
     }
 
+    /// <summary>
+    /// Applies configured JWT Bearer authentication for this API project.
+    /// </summary>
+    /// <param name="builder">Web API application builder.</param>
+    /// <returns>Web API application builder.</returns>
     static IHostApplicationBuilder AddConfiguredAuthentication(this IHostApplicationBuilder builder)
     {
         var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -92,6 +84,11 @@ public static class DependencyInjection
         return builder;
     }
 
+    /// <summary>
+    /// Adds configured open telemetry with metrics for current API project.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     static IHostApplicationBuilder AddOpenTelemetry(this IHostApplicationBuilder builder)
     {
         builder.Services.AddOpenTelemetry()

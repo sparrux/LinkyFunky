@@ -1,5 +1,5 @@
-using LinkyFunky.Domain.Common;
 using FluentResults;
+using LinkyFunky.Domain.Common;
 using LinkyFunky.Domain.Interfaces;
 
 namespace LinkyFunky.Domain.Entities;

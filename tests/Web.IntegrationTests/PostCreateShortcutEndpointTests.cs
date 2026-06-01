@@ -1,5 +1,4 @@
 using System.Net;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using LinkyFunky.Application.Contracts.Requests;
 using LinkyFunky.Application.Contracts.Responses;

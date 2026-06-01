@@ -1,6 +1,6 @@
+using System.Text.Json;
 using LinkyFunky.Application.Interfaces.Cache;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Text.Json;
 
 namespace LinkyFunky.Infrastructure.Services.Cache;
 
