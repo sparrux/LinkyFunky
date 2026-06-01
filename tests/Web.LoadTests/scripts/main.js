@@ -7,17 +7,27 @@ console.log('Base URL: ' + baseUrl);
 
 export const options = {
     stages: [
-        { duration: '30s', target: 50 },  // Ramp-up
-        { duration: '2m', target: 50 },   // Steady
+        { duration: '30s', target: 150 },  // Ramp-up
+        { duration: '2m', target: 150 },   // Steady
         { duration: '30s', target: 0 },   // Ramp-down
     ],
     thresholds: {
         http_req_failed: ['rate<0.01'],
-        http_req_duration: ['p(95)<500']
+        http_req_duration: [
+            'p(50)<10',
+            'p(95)<20',
+        ],
     },
   };
 
 export function setup() {
+    
+    const tokenPayload = http.get(`${baseUrl}/reg`);
+    const accessToken = tokenPayload.json('accessToken');
+    
+    console.log(tokenPayload);
+    console.log('Access Token is ' + accessToken !== undefined);
+    
     let shortcuts = [];
     
     for (let i = 0; i < 9; i++) {
@@ -28,12 +38,15 @@ export function setup() {
                 longUrl: 'https://google.com/' 
             }),
             {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
             }
         );
 
         if (createRes.status !== 200) {
-            throw new Error('Failed to create shortcut');
+            throw new Error(`Failed to create shortcut. Status is ${createRes.status}`);
         }
 
         const payload = createRes.json();
@@ -54,5 +67,5 @@ export default function(data) {
         'status is 302': (res) => res.status === 302,
     });
 
-    sleep(0.5);
+    sleep(0.3 + Math.random() * 0.7);
 }

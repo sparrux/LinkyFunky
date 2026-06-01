@@ -1,8 +1,8 @@
+using FastEndpoints;
 using LinkyFunky.Application;
 using LinkyFunky.Infrastructure;
 using LinkyFunky.ServiceDefaults;
 using Scalar.AspNetCore;
-using FastEndpoints;
 using Web;
 using Web.Middlewares;
 
@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseMiddleware<AnonymouslyAuthMiddleware>();
+app.UseMiddleware<GuestMiddleware>();
 app.UseAuthorization();
 app.UseMiddleware<UserDailyRateLimitMiddleware>();
 app.UseFastEndpoints();

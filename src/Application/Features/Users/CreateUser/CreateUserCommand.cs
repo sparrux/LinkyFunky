@@ -5,6 +5,7 @@ using MediatR;
 namespace LinkyFunky.Application.Features.Users.CreateUser;
 
 /// <summary>
-/// Creates a new anonymous user.
+/// Creates a new user.
+/// <param name="UserId">Specified user id.</param>
 /// </summary>
-public sealed record CreateUserCommand : IRequest<Result<User>>;
+public sealed record CreateUserCommand(Guid UserId = default) : IRequest<Result<User>>;

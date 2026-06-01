@@ -18,7 +18,7 @@ public sealed class CreateUserCommandHandler(IUsersRepository usersRepository) :
     /// <returns>A result containing the created <see cref="User"/>.</returns>
     public async Task<Result<User>> Handle(CreateUserCommand request, CancellationToken ctk)
     {
-        var user = User.Create();
+        var user = User.Create(specifiedUserId: request.UserId);
 
         await usersRepository.AddAsync(user, ctk);
         await usersRepository.UnitOfWork.SaveChangesAsync(ctk);

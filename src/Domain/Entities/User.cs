@@ -18,8 +18,17 @@ public sealed class User : Entity
     /// Creates a new <see cref="User"/> instance.
     /// </summary>
     /// <returns>A new <see cref="User"/> instance.</returns>
-    public static User Create()
+    public static User Create(Guid specifiedUserId = default)
     {
-        return new();
+        return new() { Id = specifiedUserId == Guid.Empty ? Guid.NewGuid() : specifiedUserId };
+    }
+    
+    /// <summary>
+    /// Creates an anonymous <see cref="User"/> instance.
+    /// </summary>
+    /// <returns>An anonymous <see cref="User"/> instance.</returns>
+    public static User CreateAnonymous()
+    {
+        return new() { Id = Guid.NewGuid() };
     }
 }

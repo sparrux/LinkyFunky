@@ -10,12 +10,15 @@ namespace Web.Middlewares;
 /// Applies per-user daily Redis-backed quotas to shortcut creation and redirect endpoints.
 /// </summary>
 /// <param name="next">The next middleware delegate.</param>
-public sealed class UserDailyRateLimitMiddleware(RequestDelegate next)
+sealed class UserDailyRateLimitMiddleware(RequestDelegate next)
 {
     /// <summary>
     /// Invokes the middleware to enforce daily limits when the request maps to a rate-limited route.
     /// </summary>
-    public async Task InvokeAsync(HttpContext httpContext, IUserDailyRateLimitService rateLimiter)
+    public async Task InvokeAsync(
+        HttpContext httpContext, 
+        IUserDailyRateLimitService rateLimiter, 
+        IGuestService guestService)
     {
         if (!TryResolveRateLimitKind(httpContext.Request, out var kind))
         {
@@ -23,7 +26,7 @@ public sealed class UserDailyRateLimitMiddleware(RequestDelegate next)
             return;
         }
 
-        if (!TryGetUserId(httpContext.User, out var userId))
+        if (!TryGetUserId(guestService, httpContext.User, out var userId))
         {
             await next(httpContext);
             return;
@@ -34,10 +37,20 @@ public sealed class UserDailyRateLimitMiddleware(RequestDelegate next)
         await HandleRateLimitAsync(result, httpContext);
     }
 
-    static bool TryGetUserId(ClaimsPrincipal user, out Guid userId)
+    bool TryGetUserId(IGuestService guestService, ClaimsPrincipal user, out Guid userId)
     {
         var raw = user.FindFirstValue(ClaimTypes.NameIdentifier);
-        return Guid.TryParse(raw, out userId);
+        
+        if (Guid.TryParse(raw, out userId))
+            return true;
+        
+        if (guestService.IsGuest)
+        {
+            userId = guestService.GuestIdOrDefault;
+            return true;
+        }
+
+        return false;
     }
 
     static bool TryResolveRateLimitKind(HttpRequest request, out UserRateLimitKind kind)

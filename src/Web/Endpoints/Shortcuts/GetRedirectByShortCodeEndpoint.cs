@@ -1,7 +1,6 @@
 using FastEndpoints;
 using LinkyFunky.Application.Features.Shortcuts.GetShortcut;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Web.Extensions;
 
 namespace Web.Endpoints.Shortcuts;
@@ -9,12 +8,13 @@ namespace Web.Endpoints.Shortcuts;
 /// <summary>
 /// Redirects a client to the original URL by shortcut code.
 /// </summary>
-[Authorize]
-public sealed class GetRedirectByShortCodeEndpoint(IMediator sender)
-    : EndpointWithoutRequest
+public sealed class GetRedirectByShortCodeEndpoint(
+    IMediator sender
+) : EndpointWithoutRequest
 {
     public override void Configure()
     {
+        AllowAnonymous();
         Get("/r/{shortCode}");
     }
 
@@ -22,7 +22,7 @@ public sealed class GetRedirectByShortCodeEndpoint(IMediator sender)
     {
         var shortCode = Route<string>("shortCode");
 
-        if (string.IsNullOrWhiteSpace(shortCode))
+        if (string.IsNullOrWhiteSpace(shortCode) || shortCode.Length < 3)
         {
             await HttpContext.Response.SendStatusCodeAsync(StatusCodes.Status400BadRequest, ctk);
             return;
