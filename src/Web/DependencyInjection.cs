@@ -11,7 +11,7 @@ using Web.Services;
 namespace Web;
 
 /// <summary>
-/// Registers Web-layer dependencies.
+/// Registers Web-layer dependencies. 
 /// </summary>
 public static class DependencyInjection
 {
@@ -27,16 +27,14 @@ public static class DependencyInjection
         
         services.AddOpenApi();
         services.AddFastEndpoints();
-        
-        builder.AddConfiguredAuthentication();
+        services.AddHttpContextAccessor();
+        services.AddScoped<IGuestService, GuestService>();
         
         services.AddAuthorization();
         services.AddHostedService<CountersSyncBackgroundService>();
 
         builder.AddOpenTelemetry();
-
-        services.AddHttpContextAccessor();
-        services.AddScoped<IGuestService, GuestService>();
+        builder.AddConfiguredAuthentication();
 
         return services;
     }

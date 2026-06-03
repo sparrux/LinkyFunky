@@ -13,12 +13,10 @@ namespace Web.Endpoints.Shortcuts;
 /// <summary>
 /// Creates a new shortcut for the current authorized user.
 /// </summary>
-[Authorize]
 public sealed class PostCreateShortcutEndpoint(IMediator sender) : Endpoint<CreateShortcutRequest, ShortcutResponse>
 {
     public override void Configure()
     {
-        AuthSchemes(JwtBearerDefaults.AuthenticationScheme);
         Post("/shortcuts");
     }
 

@@ -18,7 +18,7 @@ export const options = {
             'p(95)<20',
         ],
     },
-  };
+};
 
 export function setup() {
     
