@@ -12,7 +12,7 @@ After implementing the requirements in this PRD, the project should run with a s
 1. The client sends his link and gets back a short one
 2. Users can follow a short link and be redirected to the user's path
 3. Each click on a link is tracked by a counter
-4. As part of the pet project, we use anonymous authorization on the server to skip the stage of implementing the login system. It will creates an anonymous account is the system
+4. We will authenticate clients who want to create shortened link by JWT access tokens. For others we will attach Guest session cookie for Rate Limits and identification
 
 ## Stack
 
@@ -42,12 +42,34 @@ User authentication is also required to configure rate limits with the previousl
 
 ## Endpoints
 
-### Create user's shortcut link
+### Simple user registration
 
 #### Request
 
 ```http
-POST /shortcut HTTP/1.1
+GET /reg HTTP/2
+```
+
+#### Response
+
+```http
+HTTP/2 200
+```
+
+| Key          | Value                       |
+|--------------|-----------------------------|
+| access_token | User's authentication token |
+
+### Create user's shortcut link
+
+#### Request
+
+**Authentication required**
+
+```http
+POST /shortcut HTTP/2
+Authorization: Bearer <access_token>
+Content-Type: application/json
 ```
 
 | Key       | Value                           |
@@ -57,24 +79,24 @@ POST /shortcut HTTP/1.1
 #### Response
 
 ```http
-HTTP/1.1 201
+HTTP/2 200
 ```
 
-| Key           | Value              |
-| ------------- | ------------------ |
-| shortcut_path | Shortened full URL |
+| Key        | Value          |
+|------------|----------------|
+| short_code | Shortened code |
 
 ### Redirect by user's shortcut
 
 #### Request
 
 ```http
-GET /:code HTTP/1.1
+GET /r/:code HTTP/2
 ```
 #### Response
 
 ```http
-HTTP/1.1 302
+HTTP/2 302
 Location: short_url
 ```
 
@@ -90,12 +112,14 @@ Location: short_url
 
 #### Shortcut
 
-| Name       | Type   |
-| ---------- | ------ |
-| Id         | Guid   |
-| LongString | String |
-| ShortCode  | String |
-| UserId     | Guid   |
+| Name      | Type   |
+|-----------|--------|
+| Id        | Guid   |
+| LongUrl   | String |
+| ShortCode | String |
+| UserId    | Guid   |
+| Redirects | Int    |
+
 
 `ShortCode` will be indexed.
 
