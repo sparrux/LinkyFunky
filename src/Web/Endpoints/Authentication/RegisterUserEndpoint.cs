@@ -14,6 +14,9 @@ using Web.Metrics;
 
 namespace Web.Endpoints.Authentication;
 
+/// <summary>
+/// Simple registration endpoint for a new users.
+/// </summary>
 public sealed class RegisterUserEndpoint(
     IMediator mediator, 
     UserMetrics userMetrics,
